@@ -1,11 +1,6 @@
-.profile {
+.dialogs {
 	border: 1px solid black;
 	padding: 10px;
 	grid-area: c;
 	background-color: #ddd;
-}
-
-.postList {
-	border: 1px solid black;
-	padding: 5px;
 }

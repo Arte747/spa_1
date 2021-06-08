@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './Profile.module.css';
+import Post from './Post/Post';
 
 const Profile = (props) => {
 	return (
@@ -14,11 +15,10 @@ const Profile = (props) => {
 					newpost
 					<div><input type="text" name="" id="" /></div>
 					<div><button>Добавить пост</button></div>
-					<div>
-						<div>Post 1</div>
-						<div>Post 2</div>
-						<div>Post 3</div>
-						<div>Post 4</div>
+					<div className={s.postList}>
+						<Post message={'Hello world!'} />
+						<Post message={'Haw are you?'} />
+						<Post message={'Yo'} />
 					</div>
 				</div>
 			</div>

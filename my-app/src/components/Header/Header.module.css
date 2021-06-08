@@ -4,3 +4,7 @@
 	grid-area: h;
 	background-color: #ddd;
 }
+
+.header img {
+	width: 30px;
+}

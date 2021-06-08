@@ -1,18 +1,18 @@
 import React from 'react';
-import './App.css';
+import s from './App.module.css';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
 import Footer from './components/Footer/Footer';
+import Dialogs from './components/Dialogs/Dialogs';
 
 const App = (props) => {
 	return (
-		<div className='wrapper'>
+		<div className={s.wrapper}>
 			<Header />
 			<Navbar />
-			<div className='content'>
-				<Profile />
-			</div>
+			{/*<Profile />*/}
+			<Dialogs />
 			<Footer />
 		</div>
 	);
