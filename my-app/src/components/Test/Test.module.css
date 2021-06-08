@@ -1,0 +1,6 @@
+.test {
+	border: 1px solid black;
+	padding: 10px;
+	grid-area: c;
+	background-color: #ddd;
+}

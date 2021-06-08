@@ -4,3 +4,11 @@
 	grid-area: n;
 	background-color: #ddd;
 }
+
+.item a {
+	text-decoration: none;
+}
+
+.item a.active {
+	color: red;
+}
