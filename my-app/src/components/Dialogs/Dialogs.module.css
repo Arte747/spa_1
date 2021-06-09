@@ -3,4 +3,16 @@
 	padding: 10px;
 	grid-area: c;
 	background-color: #ddd;
+	display: grid;
+	grid-template-columns: 2fr 10fr;
+}
+
+.dialogsList {
+	border: 1px solid black;
+	padding: 10px;
+}
+
+.messages {
+	border: 1px solid black;
+	padding: 10px;
 }

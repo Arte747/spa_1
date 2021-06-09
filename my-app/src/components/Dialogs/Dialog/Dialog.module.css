@@ -1,0 +1,12 @@
+.dialog {
+	border: 1px solid #FF00FF;
+	padding: 5px;
+}
+
+.dialog a {
+	text-decoration: none;
+}
+
+/* .dialog a.active { */
+	/* color: red; */
+/* } */
