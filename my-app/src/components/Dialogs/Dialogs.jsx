@@ -2,14 +2,22 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import Dialog from './Dialog/Dialog';
 import Message from './Message/Message';
+import {updateNewMessageTextAC, sendMessageAC} from '../../redux/state';
 
 const Dialogs = (props) => {
-	
-	
 	
 	let dialogsElements = props.dialogs.map(d => <Dialog key={d.id} name={d.name} id={d.id} />);
 	
 	let messagesElements = props.messages.map(m => <Message key={m.id} message={m.message}/>);
+	
+	const onMessageChange = (e) => {
+		let text = e.target.value;
+		props.dispatch(updateNewMessageTextAC(text));
+	};
+	
+	const sendMessage = () => {
+		props.dispatch(sendMessageAC());
+	};
 	
 	return (
 		<div className={s.dialogs}>
@@ -17,6 +25,14 @@ const Dialogs = (props) => {
 				{dialogsElements}
 			</div>
 			<div className={s.messages}>
+				<div className={s.newMessage}>
+					<div>
+						<input onChange={onMessageChange} value={props.newMessageText} type="text" name="" id="" />
+					</div>
+					<div>
+						<button onClick={sendMessage}>Отправить</button>
+					</div>
+				</div>
 				{messagesElements}
 			</div>
 		</div>
