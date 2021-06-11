@@ -1,6 +1,8 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
+import {updateNewPostTextAC} from '../../../redux/state';
+import {addPostAC} from '../../../redux/state';
 
 const MyPosts = (props) => {
 	
@@ -8,13 +10,11 @@ const MyPosts = (props) => {
 	
 	let onPostChange = (e) => {
 		let text = e.target.value;
-		props.updateNewPostText(text);
+		props.dispatch(updateNewPostTextAC(text));
 	};
 	
 	let addPost = () => {
-		let text = newPostElement.current.value;
-		newPostElement.current.value = '';
-		props.addPost();
+		props.dispatch(addPostAC());
 	};
 	
 	let postsElements = props.posts.map(p => <Post key={p.id} message={p.message} />);
