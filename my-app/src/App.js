@@ -4,7 +4,7 @@ import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
 import Footer from './components/Footer/Footer';
-import Dialogs from './components/Dialogs/Dialogs';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Test from './components/Test/Test';
 import {Route} from 'react-router-dom';
 
@@ -18,10 +18,10 @@ const App = (props) => {
 						 dispatch={props.dispatch}/>} />
 				
 			<Route path="/dialogs" render={()=>
-				<Dialogs dialogs={props.state.dialogsPage.dialogs}
-						 messages={props.state.dialogsPage.messages}
-						 newMessageText={props.state.dialogsPage.newMessageText}
-						 dispatch={props.dispatch}/>} />
+				<DialogsContainer dialogs={props.state.dialogsPage.dialogs}
+								  messages={props.state.dialogsPage.messages}
+								  newMessageText={props.state.dialogsPage.newMessageText}
+								  dispatch={props.dispatch}/>} />
 						 
 			<Route path="/test" component={Test} />
 			

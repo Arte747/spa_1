@@ -1,7 +1,6 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import {updateNewPostTextAC, addPostAC} from '../../../redux/profile-reducer';
 
 const MyPosts = (props) => {
 	
@@ -9,11 +8,11 @@ const MyPosts = (props) => {
 	
 	let onPostChange = (e) => {
 		let text = e.target.value;
-		props.dispatch(updateNewPostTextAC(text));
+		props.onPostChange(text);
 	};
 	
 	let addPost = () => {
-		props.dispatch(addPostAC());
+		props.addPost();
 	};
 	
 	let postsElements = props.posts.map(p => <Post key={p.id} message={p.message} />);
