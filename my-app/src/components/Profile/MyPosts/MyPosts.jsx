@@ -19,6 +19,7 @@ const MyPosts = (props) => {
 	
 	return (
 		<div className={s.myPosts}>
+			{console.log('render')}
 			<div className={s.newPost}>
 				newpost
 				<div><textarea onChange={onPostChange} ref={newPostElement} value={props.newPostText}></textarea></div>

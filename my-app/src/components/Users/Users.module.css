@@ -1,0 +1,18 @@
+.users {
+	border: 1px solid black;
+	padding: 10px;
+	grid-area: c;
+	background-color: #ddd;
+}
+
+.user {
+	border: 1px solid black;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+.ava img {
+	border: 1px solid black;
+	width: 100px;
+	height: auto;
+}
