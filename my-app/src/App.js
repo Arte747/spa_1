@@ -14,13 +14,15 @@ const App = (props) => {
 		<div className={s.wrapper}>
 			<Header />
 			<Navbar />
-			<Route path="/profile" render={()=><Profile/>} />
+			<div className={s.content}>
+				<Route path="/profile" render={()=><Profile/>} />
 				
-			<Route path="/dialogs" render={()=><DialogsContainer />} />
-			
-			<Route path="/users" render={()=><UsersContainer />} />
-						 
-			<Route path="/test" component={Test} />
+				<Route path="/dialogs" render={()=><DialogsContainer />} />
+				
+				<Route path="/users" render={()=><UsersContainer />} />
+							 
+				<Route path="/test" component={Test} />
+			</div>
 			
 			<Footer />
 		</div>
