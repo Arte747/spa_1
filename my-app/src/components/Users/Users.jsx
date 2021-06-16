@@ -5,13 +5,23 @@ import * as axios from 'axios';
 
 class Users extends React.Component {
 	
-	constructor(props) {
-		super(props);
-		axios.get('https://social-network.samuraijs.com/api/1.0/users')
+	
+	componentDidMount() {
+		axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
 			.then(response => {
+				this.props.setTotalUsersCount(response.data.totalCount);
 				this.props.setUsers(response.data.items);
 			});
-	};
+	}
+	
+	onPageChange = (pageNumber) => {
+		this.props.setCurrentPage(pageNumber);
+		axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+			.then(response => {
+				this.props.setTotalUsersCount(response.data.totalCount);
+				this.props.setUsers(response.data.items);
+			});
+	}
 	
 	follow = (userId) => {
 		this.props.followed(userId);
@@ -22,8 +32,22 @@ class Users extends React.Component {
 	}
 	
 	render() {
+		
+		let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
+		
+		let pages = [];
+		
+		for(let i = 1;i <= pagesCount;i++) {
+			pages.push(i);
+		}
+		
 		return (
 			<div className={s.users}>
+				
+				<div>
+					{pages.map(p => <button onClick={()=>{this.onPageChange(p)}} className={this.props.currentPage === p ? s.active : undefined} key={p}>{p}</button>)}
+				</div>
+				
 				{
 					this.props.users.map(u => <div className={s.user} key={u.id}>
 						<div className={s.ava}>{u.photos.small

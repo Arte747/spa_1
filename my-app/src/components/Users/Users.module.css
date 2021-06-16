@@ -16,3 +16,8 @@
 	width: 100px;
 	height: auto;
 }
+
+.active {
+	border: 1px solid red;
+	border-radius: 2px;
+}
