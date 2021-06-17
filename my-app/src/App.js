@@ -2,7 +2,7 @@ import React from 'react';
 import s from './App.module.css';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import Profile from './components/Profile/Profile';
+import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import Footer from './components/Footer/Footer';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
@@ -15,7 +15,8 @@ const App = (props) => {
 			<Header />
 			<Navbar />
 			<div className={s.content}>
-				<Route path="/profile" render={()=><Profile/>} />
+				
+				<Route path="/profile" render={()=><ProfileContainer />} />
 				
 				<Route path="/dialogs" render={()=><DialogsContainer />} />
 				
