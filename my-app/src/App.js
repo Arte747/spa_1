@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './App.module.css';
-import Header from './components/Header/Header';
+import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
@@ -12,7 +12,7 @@ import {Route} from 'react-router-dom';
 const App = (props) => {
 	return (
 		<div className={s.wrapper}>
-			<Header />
+			<HeaderContainer />
 			<Navbar />
 			<div className={s.content}>
 				{/* ? означает, что параметр не обязателен */}
