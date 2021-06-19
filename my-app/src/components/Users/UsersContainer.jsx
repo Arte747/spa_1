@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {follow, unFollow, setCurrentPage, getUsersThunkCreator} from '../../redux/users-reducer.js';
 import Preloader from '../../common/Preloader/Preloader';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {compose} from 'redux';
 
 
 class UsersContainer extends React.Component {
@@ -38,9 +39,6 @@ class UsersContainer extends React.Component {
 	}
 };
 
-const withRedirect = withAuthRedirect(UsersContainer);
-
-
 // вызывается при каждом изменении в state
 // при изменении только этих параметров
 const mapStateToProps = (state) => ({
@@ -52,8 +50,7 @@ const mapStateToProps = (state) => ({
 	followingInProgress: state.usersPage.followingInProgress
 });
 
-export default connect(mapStateToProps, {
-	follow,
-	unFollow,
-	setCurrentPage,
-	getUsersThunkCreator})(withRedirect);
+export default compose(
+	connect(mapStateToProps, {follow, unFollow, setCurrentPage, getUsersThunkCreator}),
+	withAuthRedirect
+)(UsersContainer);
