@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './App.module.css';
+import Login from './components/Login/Login';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
 import ProfileContainer from './components/Profile/ProfileContainer';
@@ -15,6 +16,9 @@ const App = (props) => {
 			<HeaderContainer />
 			<Navbar />
 			<div className={s.content}>
+				
+				<Route path="/login" render={()=><Login />} />
+				
 				{/* ? означает, что параметр не обязателен */}
 				<Route path="/profile/:userId?" render={()=><ProfileContainer />} />
 				
