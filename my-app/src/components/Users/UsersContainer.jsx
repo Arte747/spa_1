@@ -1,32 +1,23 @@
 import React from 'react';
-import * as axios from 'axios';
 import Users from './Users';
 import {connect} from 'react-redux';
-import {setUsers, follow, unfollow, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingProgress} from '../../redux/users-reducer.js';
+import {follow, unFollow, setCurrentPage, getUsersThunkCreator} from '../../redux/users-reducer.js';
 import Preloader from '../../common/Preloader/Preloader';
-import {usersAPI} from '../../api/api';
 
 
 class UsersContainer extends React.Component {
 	componentDidMount() {
-		this.props.toggleIsFetching(true);
 		
-		usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-			this.props.toggleIsFetching(false);
-			this.props.setTotalUsersCount(data.totalCount);
-			this.props.setUsers(data.items);
-		});
+		this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize);
+		
 	}
 	
 	onPageChange = (pageNumber) => {
-		this.props.setCurrentPage(pageNumber);
-		this.props.toggleIsFetching(true);
 		
-		usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
-			this.props.toggleIsFetching(false);
-			this.props.setTotalUsersCount(data.totalCount);
-			this.props.setUsers(data.items);
-		});
+		this.props.getUsersThunkCreator(pageNumber, this.props.pageSize);
+		
+		this.props.setCurrentPage(pageNumber);
+		
 	}
 	
 	render() {
@@ -39,8 +30,7 @@ class UsersContainer extends React.Component {
 				   users={this.props.users}
 				   isFetching={this.props.isFetching}
 				   follow={this.props.follow}
-				   unfollow={this.props.unfollow}
-				   toggleFollowingProgress={this.props.toggleFollowingProgress}
+				   unFollow={this.props.unFollow}
 				   followingInProgress={this.props.followingInProgress}/>
 			
 		</div>);
@@ -62,10 +52,7 @@ const mapStateToProps = (state) => ({
 
 
 export default connect(mapStateToProps, {
-	setUsers,
 	follow,
-	unfollow,
+	unFollow,
 	setCurrentPage,
-	setTotalUsersCount,
-	toggleIsFetching,
-	toggleFollowingProgress})(UsersContainer);
+	getUsersThunkCreator})(UsersContainer);
