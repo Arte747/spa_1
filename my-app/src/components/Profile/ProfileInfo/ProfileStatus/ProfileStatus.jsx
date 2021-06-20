@@ -27,6 +27,14 @@ class ProfileStatus extends React.Component {
 		});
 	}
 	
+	componentDidUpdate(prevProps, prevState) {
+		if(this.props.status !== prevProps.status) {
+			this.setState({
+				status: this.props.status
+			});
+		}
+	}
+	
 	render() {
 		return (
 			<div className={s.profileStatus}>
