@@ -3,6 +3,8 @@ import s from './Dialogs.module.css';
 import Dialog from './Dialog/Dialog';
 import Message from './Message/Message';
 import {reduxForm, Field} from 'redux-form';
+import {requireField, maxLengthCreator} from '../../utils/validators/validators';
+import {Textarea} from '../../common/FormsControls/FormsControls';
 
 const Dialogs = (props) => {
 	
@@ -10,11 +12,15 @@ const Dialogs = (props) => {
 	
 	let messagesElements = props.messages.map(m => <Message key={m.id} message={m.message}/>);
 	
+	// это должно быть за пределами компоненты
+	let maxLength = maxLengthCreator(15);
+	
 	const MessageForm = (props) => {
+		
 		return (
 			<form onSubmit={props.handleSubmit}>
 				<div>
-					<Field component={"input"} name={"message"} />
+					<Field component={Textarea} name={"message"} validate={[requireField, maxLength]} />
 				</div>
 				<div>
 					<button>Отправить</button>

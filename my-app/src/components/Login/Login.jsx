@@ -1,8 +1,12 @@
 import React from 'react';
 import s from './Login.module.css';
 import {reduxForm, Field} from 'redux-form';
+import {requireField, maxLengthCreator} from '../../utils/validators/validators';
+import {Input} from '../../common/FormsControls/FormsControls';
 
 const Login = (props) => {
+	
+	let maxLength = maxLengthCreator(5);
 	
 	const LoginForm = (props) => {
 		return (
@@ -11,10 +15,10 @@ const Login = (props) => {
 			// при клике на кнопку не происходит перезагрузка страницы
 			<form onSubmit={props.handleSubmit}>
 				<div>
-					<Field component={'input'} name={"login"} placeholder={"Login"} />
+					<Field component={Input} name={"login"} validate={[requireField, maxLength]} placeholder={"Login"} />
 				</div>
 				<div>
-					<Field component={'input'} name={"password"} placeholder={"Password"} />
+					<Field component={Input} name={"password"} validate={[requireField, maxLength]} placeholder={"Password"} />
 				</div>
 				<div>
 					<Field component={'input'} name={"rememberMe"} type={"checkbox"} />
