@@ -2,6 +2,7 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import Dialog from './Dialog/Dialog';
 import Message from './Message/Message';
+import {reduxForm, Field} from 'redux-form';
 
 const Dialogs = (props) => {
 	
@@ -9,15 +10,25 @@ const Dialogs = (props) => {
 	
 	let messagesElements = props.messages.map(m => <Message key={m.id} message={m.message}/>);
 	
-	const onMessageChange = (e) => {
-		let text = e.target.value;
-		props.onMessageChange(text);
+	const MessageForm = (props) => {
+		return (
+			<form onSubmit={props.handleSubmit}>
+				<div>
+					<Field component={"input"} name={"message"} />
+				</div>
+				<div>
+					<button>Отправить</button>
+				</div>
+			</form>
+		);
 	};
 	
-	const sendMessage = () => {
-		props.sendMessage();
-	};
+	const ReduxMessageForm = reduxForm({form: 'messageForm'})(MessageForm);
 	
+	const onSubmit = (values) => {
+		let text = values.message;
+		props.sendMessage(text);
+	}
 	
 	return (
 		<div className={s.dialogs}>
@@ -26,12 +37,7 @@ const Dialogs = (props) => {
 			</div>
 			<div className={s.messages}>
 				<div className={s.newMessage}>
-					<div>
-						<input onChange={onMessageChange} value={props.newMessageText} type="text" name="" id="" />
-					</div>
-					<div>
-						<button onClick={sendMessage}>Отправить</button>
-					</div>
+					<ReduxMessageForm onSubmit={onSubmit} />
 				</div>
 				{messagesElements}
 			</div>

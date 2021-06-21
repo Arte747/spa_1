@@ -1,5 +1,5 @@
 import MyPosts from './MyPosts';
-import {updateNewPostTextAC, addPostAC} from '../../../redux/profile-reducer';
+import {addPostAC} from '../../../redux/profile-reducer';
 import {connect} from 'react-redux';
 
 // при каждом изменении запускается mapStateToProps
@@ -11,11 +11,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	onPostChange(text) {
-		dispatch(updateNewPostTextAC(text));
-	},
-	addPost() {
-		dispatch(addPostAC());
+	addPost(newPost) {
+		dispatch(addPostAC(newPost));
 	}
 });
 
