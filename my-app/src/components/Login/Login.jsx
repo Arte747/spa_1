@@ -3,10 +3,13 @@ import s from './Login.module.css';
 import {reduxForm, Field} from 'redux-form';
 import {requireField, maxLengthCreator} from '../../utils/validators/validators';
 import {Input} from '../../common/FormsControls/FormsControls';
+import {connect} from 'react-redux';
+import {login} from '../../redux/auth-reducer';
+import {Redirect} from 'react-router-dom';
 
 const Login = (props) => {
 	
-	let maxLength = maxLengthCreator(5);
+	let maxLength = maxLengthCreator(30);
 	
 	const LoginForm = (props) => {
 		return (
@@ -15,7 +18,7 @@ const Login = (props) => {
 			// при клике на кнопку не происходит перезагрузка страницы
 			<form onSubmit={props.handleSubmit}>
 				<div>
-					<Field component={Input} name={"login"} validate={[requireField, maxLength]} placeholder={"Login"} />
+					<Field component={Input} name={"email"} validate={[requireField, maxLength]} placeholder={"Login"} />
 				</div>
 				<div>
 					<Field component={Input} name={"password"} validate={[requireField, maxLength]} placeholder={"Password"} />
@@ -34,8 +37,10 @@ const Login = (props) => {
 	
 	// срабатывает при сабмите формы
 	const onsubmit = (formData) => {
-		console.log(formData);
+		props.login(formData.email, formData.password, formData.rememberMe);
 	};
+	
+	if(props.isAuth) return <Redirect to={'profile'} />
 	
 	return (
 		<div className={s.login}>
@@ -45,4 +50,8 @@ const Login = (props) => {
 	);
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+	isAuth: state.auth.isAuth
+});
+
+export default connect(mapStateToProps, {login})(Login);

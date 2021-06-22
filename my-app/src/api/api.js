@@ -37,5 +37,13 @@ export const usersAPI = {
 	
 	updateStatus(status) {
 		return instanse.put(`profile/status`, {status});
+	},
+	
+	login(email, password, rememberMe = false) {
+		return instanse.post(`auth/login`, {email, password, rememberMe});
+	},
+	
+	logout() {
+		return instanse.delete(`auth/login`);
 	}
 };
