@@ -4,3 +4,9 @@
 	grid-area: c;
 	background-color: #ddd;
 }
+
+.orerallError {
+	width: 170px;
+	border: 2px solid red;
+	color: red;
+}

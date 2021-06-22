@@ -26,6 +26,7 @@ const Login = (props) => {
 				<div>
 					<Field component={'input'} name={"rememberMe"} type={"checkbox"} />
 				</div>
+				{props.error ? <div className={s.orerallError}>{props.error}</div> : null}
 				<div>
 					<button>Login</button>
 				</div>
