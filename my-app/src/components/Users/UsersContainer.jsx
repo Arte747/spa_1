@@ -5,6 +5,7 @@ import {follow, unFollow, setCurrentPage, getUsersThunkCreator} from '../../redu
 import Preloader from '../../common/Preloader/Preloader';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
+import {getUsers, getPageSize, getTotalUsersCount, getCurrentPage, getIsFetching, getFollowingInProgress} from '../../redux/users-selectors';
 
 
 class UsersContainer extends React.Component {
@@ -23,6 +24,9 @@ class UsersContainer extends React.Component {
 	}
 	
 	render() {
+		
+		console.log('Render users');
+		
 		return (<div>
 			{this.props.isFetching ? <Preloader /> : null}
 			<Users totalUsersCount={this.props.totalUsersCount}
@@ -39,16 +43,17 @@ class UsersContainer extends React.Component {
 	}
 };
 
-// вызывается при каждом изменении в state
-// при изменении только этих параметров
-const mapStateToProps = (state) => ({
-	users: state.usersPage.users,
-	pageSize: state.usersPage.pageSize,
-	totalUsersCount: state.usersPage.totalUsersCount,
-	currentPage: state.usersPage.currentPage,
-	isFetching: state.usersPage.isFetching,
-	followingInProgress: state.usersPage.followingInProgress
-});
+const mapStateToProps = (state) => {
+	console.log('mapStateToProps users');
+	return {
+		users: getUsers(state),
+		pageSize: getPageSize(state),
+		totalUsersCount: getTotalUsersCount(state),
+		currentPage: getCurrentPage(state),
+		isFetching: getIsFetching(state),
+		followingInProgress: getFollowingInProgress(state)
+	}
+};
 
 export default compose(
 	connect(mapStateToProps, {follow, unFollow, setCurrentPage, getUsersThunkCreator}),

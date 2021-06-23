@@ -19,7 +19,7 @@ class ProfileContainer extends React.Component {
 	}
 	
 	render() {
-		
+		// console.log('Render profile');
 		return (
 			<Profile {...this.props}
 					 profile={this.props.profile}
@@ -29,12 +29,15 @@ class ProfileContainer extends React.Component {
 	}
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => {
+	// console.log('mapStateToProps profile');
+	return {
 	profile: state.profilePage.profile,
 	status: state.profilePage.status,
 	autorizedUserId: state.auth.autorizedUserId,
 	isAuth: state.auth.isAuth
-});
+}
+};
 
 export default compose(
 	connect(mapStateToProps, {getUserProfile, getUserStatus, updateStatus}),

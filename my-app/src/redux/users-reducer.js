@@ -14,11 +14,19 @@ const initialState = {
 	totalUsersCount: 0,
 	currentPage: 1,
 	isFetching: true,
-	followingInProgress: []
+	followingInProgress: [],
+	fake: 10
 }
 
 const usersReducers = (state = initialState, action) => {
 	switch(action.type) {
+		
+		case "FAKE":
+			return {
+				...state,
+				fake: state.fake + 1
+			}
+		
 		case SET_USERS:
 			return {
 				...state,
