@@ -8,30 +8,49 @@ import UsersContainer from './components/Users/UsersContainer';
 import Footer from './components/Footer/Footer';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Test from './components/Test/Test';
-import {Route} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {initializeApp} from './redux/app-reducer';
+import {compose} from 'redux';
+import Preloader from './common/Preloader/Preloader';
 
-const App = (props) => {
-	return (
-		<div className={s.wrapper}>
-			<HeaderContainer />
-			<Navbar />
-			<div className={s.content}>
+class App extends React.Component {
+	
+	componentDidMount() {
+		this.props.initializeApp();
+	}
+	
+	render() {
+		if(!this.props.initialized) return <Preloader />
+		
+		return (
+			<div className={s.wrapper}>
+				<HeaderContainer />
+				<Navbar />
+				<div className={s.content}>
+					
+					<Route path="/login" render={()=><Login />} />
+					
+					{/* ? означает, что параметр не обязателен */}
+					<Route path="/profile/:userId?" render={()=><ProfileContainer />} />
+					
+					<Route path="/dialogs" render={()=><DialogsContainer />} />
+					
+					<Route path="/users" render={()=><UsersContainer />} />
+								 
+					<Route path="/test" component={Test} />
+				</div>
 				
-				<Route path="/login" render={()=><Login />} />
-				
-				{/* ? означает, что параметр не обязателен */}
-				<Route path="/profile/:userId?" render={()=><ProfileContainer />} />
-				
-				<Route path="/dialogs" render={()=><DialogsContainer />} />
-				
-				<Route path="/users" render={()=><UsersContainer />} />
-							 
-				<Route path="/test" component={Test} />
+				<Footer />
 			</div>
-			
-			<Footer />
-		</div>
-	);
+		);
+	}
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+	initialized: state.app.initialized
+});
+
+export default compose(
+	withRouter,
+	connect(mapStateToProps, {initializeApp}))(App);

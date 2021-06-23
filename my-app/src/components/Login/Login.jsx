@@ -21,7 +21,7 @@ const Login = (props) => {
 					<Field component={Input} name={"email"} validate={[requireField, maxLength]} placeholder={"Login"} />
 				</div>
 				<div>
-					<Field component={Input} name={"password"} validate={[requireField, maxLength]} placeholder={"Password"} />
+					<Field component={Input} type="password" name={"password"} validate={[requireField, maxLength]} placeholder={"Password"} />
 				</div>
 				<div>
 					<Field component={'input'} name={"rememberMe"} type={"checkbox"} />

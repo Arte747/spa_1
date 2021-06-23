@@ -4,7 +4,7 @@ import {stopSubmit} from 'redux-form';
 const SET_USER_DATA = 'SET_USER_DATA';
 
 const initialState = {
-	userId: null,
+	autorizedUserId: null,
 	email: null,
 	login: null,
 	isAuth: false
@@ -25,13 +25,13 @@ const authReducer = (state = initialState, action) => {
 
 export default authReducer;
 
-export const setAuthUserData = (userId, email, login, isAuth) => ({type: SET_USER_DATA, data: {userId, email, login, isAuth}});
+export const setAuthUserData = (autorizedUserId, email, login, isAuth) => ({type: SET_USER_DATA, data: {autorizedUserId, email, login, isAuth}});
 
 // thunk
 
 // получение и установка авторизационных(пользоватеьских данных)
 export const getAuthUserData = () => (dispatch) => {
-	usersAPI.me().then(response => {
+	return usersAPI.me().then(response => {
 		if(response.data.resultCode === 0) {
 			let {id, email, login} = response.data.data;
 			dispatch(setAuthUserData(id, email, login, true));
