@@ -2,31 +2,28 @@ import React from 'react';
 import s from './Login.module.css';
 import {reduxForm, Field} from 'redux-form';
 import {requireField, maxLengthCreator} from '../../utils/validators/validators';
-import {Input} from '../../common/FormsControls/FormsControls';
+import {Input, createField} from '../../common/FormsControls/FormsControls';
 import {connect} from 'react-redux';
 import {login} from '../../redux/auth-reducer';
 import {Redirect} from 'react-router-dom';
 
-const Login = (props) => {
+const Login = ({handleSubmit, error, login, isAuth}) => {
 	
 	let maxLength = maxLengthCreator(30);
 	
-	const LoginForm = (props) => {
+	const LoginForm = ({handleSubmit, error}) => {
 		return (
 			// у любой формы есть событие onsubmit
 			// ему доверяется обработка формы
 			// при клике на кнопку не происходит перезагрузка страницы
-			<form onSubmit={props.handleSubmit}>
-				<div>
-					<Field component={Input} name={"email"} validate={[requireField, maxLength]} placeholder={"Login"} />
-				</div>
-				<div>
-					<Field component={Input} type="password" name={"password"} validate={[requireField, maxLength]} placeholder={"Password"} />
-				</div>
-				<div>
-					<Field component={'input'} name={"rememberMe"} type={"checkbox"} />
-				</div>
-				{props.error ? <div className={s.orerallError}>{props.error}</div> : null}
+			<form onSubmit={handleSubmit}>
+				{createField(Input, "email", [requireField, maxLength], "Login")}
+				
+				{createField(Input, "password", [requireField, maxLength], "password", {type: "password"})}
+				
+				{createField(Input, "rememberMe", [], "", {type: "checkbox"}, 'remember me')}
+				
+				{error ? <div className={s.orerallError}>{error}</div> : null}
 				<div>
 					<button>Login</button>
 				</div>
@@ -38,10 +35,10 @@ const Login = (props) => {
 	
 	// срабатывает при сабмите формы
 	const onsubmit = (formData) => {
-		props.login(formData.email, formData.password, formData.rememberMe);
+		login(formData.email, formData.password, formData.rememberMe);
 	};
 	
-	if(props.isAuth) return <Redirect to={'profile'} />
+	if(isAuth) return <Redirect to={'profile'} />
 	
 	return (
 		<div className={s.login}>

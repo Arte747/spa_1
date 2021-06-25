@@ -30,33 +30,33 @@ export const setAuthUserData = (autorizedUserId, email, login, isAuth) => ({type
 // thunk
 
 // получение и установка авторизационных(пользоватеьских данных)
-export const getAuthUserData = () => (dispatch) => {
-	return usersAPI.me().then(response => {
-		if(response.data.resultCode === 0) {
-			let {id, email, login} = response.data.data;
-			dispatch(setAuthUserData(id, email, login, true));
-		}
-	});
+export const getAuthUserData = () => async (dispatch) => {
+	let response = await usersAPI.me();
+	
+	if(response.data.resultCode === 0) {
+		let {id, email, login} = response.data.data;
+		dispatch(setAuthUserData(id, email, login, true));
+	}
 };
 
-export const login = (email, password, rememberMe) => (dispatch) => {
-	usersAPI.login(email, password, rememberMe).then(response => {
-		if(response.data.resultCode === 0) {
-			dispatch(getAuthUserData());
-		} else {
-			let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
-			// первый параметр-уникальное имя формы
-			// второй имя поля(name) и текст ошибки
-			// _error выводит общую для всей формы ошибку
-			dispatch(stopSubmit("loginForm", {_error: message}));
-		}
-	});
+export const login = (email, password, rememberMe) => async (dispatch) => {
+	let response = await usersAPI.login(email, password, rememberMe);
+	
+	if(response.data.resultCode === 0) {
+		dispatch(getAuthUserData());
+	} else {
+		let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
+		// первый параметр-уникальное имя формы
+		// второй имя поля(name) и текст ошибки
+		// _error выводит общую для всей формы ошибку
+		dispatch(stopSubmit("loginForm", {_error: message}));
+	}
 };
 
-export const logout = () => (dispatch) => {
-	usersAPI.logout().then(response => {
-		if(response.data.resultCode === 0) {
-			dispatch(setAuthUserData(null, null, null, false));
-		}
-	});
+export const logout = () => async (dispatch) => {
+	let response = await usersAPI.logout();
+	
+	if(response.data.resultCode === 0) {
+		dispatch(setAuthUserData(null, null, null, false));
+	}
 };

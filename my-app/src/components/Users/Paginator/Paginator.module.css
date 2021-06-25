@@ -1,0 +1,10 @@
+.paginator {
+	border: 1px solid #FF00FF;
+	margin-bottom: 10px;
+}
+
+.active {
+	border: 1px solid red;
+	border-radius: 2px;
+}
+

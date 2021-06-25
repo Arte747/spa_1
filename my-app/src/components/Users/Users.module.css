@@ -5,19 +5,3 @@
 	background-color: #ddd;
 }
 
-.user {
-	border: 1px solid black;
-	padding: 5px;
-	margin-bottom: 10px;
-}
-
-img.ava {
-	border: 1px solid black;
-	width: 100px;
-	height: auto;
-}
-
-.active {
-	border: 1px solid red;
-	border-radius: 2px;
-}
