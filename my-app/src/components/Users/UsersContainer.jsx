@@ -9,6 +9,7 @@ import {getUsers, getPageSize, getTotalUsersCount, getCurrentPage, getIsFetching
 
 
 class UsersContainer extends React.Component {
+	
 	componentDidMount() {
 		
 		this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize);
@@ -37,23 +38,21 @@ class UsersContainer extends React.Component {
 				   isFetching={this.props.isFetching}
 				   follow={this.props.follow}
 				   unFollow={this.props.unFollow}
-				   followingInProgress={this.props.followingInProgress}/>
-			
+				   followingInProgress={this.props.followingInProgress}
+				   portionSize={this.props.portionSize}/>
 		</div>);
 	}
 };
 
-const mapStateToProps = (state) => {
-	console.log('mapStateToProps users');
-	return {
+const mapStateToProps = (state) => ({
 		users: getUsers(state),
 		pageSize: getPageSize(state),
 		totalUsersCount: getTotalUsersCount(state),
 		currentPage: getCurrentPage(state),
 		isFetching: getIsFetching(state),
-		followingInProgress: getFollowingInProgress(state)
-	}
-};
+		followingInProgress: getFollowingInProgress(state),
+		portionSize: state.usersPage.portionSize
+});
 
 export default compose(
 	connect(mapStateToProps, {follow, unFollow, setCurrentPage, getUsersThunkCreator}),

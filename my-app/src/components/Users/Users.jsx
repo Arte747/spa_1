@@ -1,11 +1,10 @@
 import React from 'react';
 import s from './Users.module.css';
+// import Paginator from './Paginator/Paginator';
 import Paginator from './Paginator/Paginator';
 import User from './User/User';
 
 const Users = (props) => {
-	
-	
 	
 	return (
 		
@@ -14,7 +13,8 @@ const Users = (props) => {
 			<Paginator currentPage={props.currentPage}
 					   onPageChange={props.onPageChange}
 					   totalUsersCount={props.totalUsersCount}
-					   pageSize={props.pageSize}/>
+					   pageSize={props.pageSize}
+					   portionSize={props.portionSize}/>
 				
 			
 			{
