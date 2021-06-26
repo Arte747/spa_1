@@ -14,7 +14,7 @@ class ProfileStatus extends React.Component {
 		});
 	}
 	
-	deactivateMode() {
+	deactivateEditMode() {
 		this.setState({
 			editMode: false
 		});
@@ -39,7 +39,7 @@ class ProfileStatus extends React.Component {
 		return (
 			<div className={s.profileStatus}>
 				{this.state.editMode
-				? <input onChange={this.onStatusChange} autoFocus={true} onBlur={this.deactivateMode.bind(this)} value={this.state.status} type="text" />
+				? <input onChange={this.onStatusChange} autoFocus={true} onBlur={this.deactivateEditMode.bind(this)} value={this.state.status} type="text" />
 					: <span onDoubleClick={this.activateEdiMode.bind(this)}>{this.props.status ? this.props.status : '---------'}</span>}
 			</div>
 		);

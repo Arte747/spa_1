@@ -2,16 +2,16 @@ import React from 'react';
 import s from './FormsControls.module.css'
 import {Field} from 'redux-form';
 
-export const Textarea = ({input, meta: {touched, error} , children}) => {
+export const Textarea = ({input, meta, ...props}) => {
 	
-	const hasError = touched && error;
+	const hasError = meta.touched && meta.error;
 	
 	return (
 		<div className={s.formsControls + ' ' + (hasError ? s.error : null)}>
 			<div>
-				{children}
+				<textarea {...input} {...props} />
 			</div>
-			{hasError ? <span>{error}</span> : undefined}
+			{hasError ? <span>{meta.error}</span> : undefined}
 		</div>
 	);
 };
