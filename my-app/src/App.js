@@ -6,7 +6,6 @@ import Navbar from './components/Navbar/Navbar';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import Footer from './components/Footer/Footer';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Test from './components/Test/Test';
 import {Route, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -16,6 +15,9 @@ import Preloader from './common/Preloader/Preloader';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import store from './redux/redux-store';
+import {withSuspense} from './hoc/withSuspense';
+// lazy
+const DialogsContainer = React.lazy(() => import('././components/Dialogs/DialogsContainer'));
 
 class App extends React.Component {
 	
@@ -37,7 +39,7 @@ class App extends React.Component {
 					{/* ? означает, что параметр не обязателен */}
 					<Route path="/profile/:userId?" render={()=><ProfileContainer />} />
 					
-					<Route path="/dialogs" render={()=><DialogsContainer />} />
+					<Route path="/dialogs" render={withSuspense(DialogsContainer)} />
 					
 					<Route path="/users" render={()=><UsersContainer />} />
 								 
