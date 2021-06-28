@@ -43,7 +43,7 @@ class App extends React.Component {
 					
 					<Route path="/users" render={()=><UsersContainer />} />
 								 
-					<Route path="/test" component={Test} />
+					<Route exact path="/" component={Test} />
 				</div>
 				
 				<Footer />

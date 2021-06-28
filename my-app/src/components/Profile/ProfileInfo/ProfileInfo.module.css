@@ -2,3 +2,9 @@
 	border: 1px solid #FF00FF;
 	padding: 10px;
 }
+
+.profileInfo img {
+	border: 1px solid black;
+	width: 300px;
+	height: auto;
+}

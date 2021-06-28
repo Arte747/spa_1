@@ -26,4 +26,4 @@ const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddle
 
 export default store;
 
-// window.store = store;
+window.store = store;
