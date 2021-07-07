@@ -1,0 +1,11 @@
+.infoEditMode {
+	border: 1px solid #FF00FF;
+	padding: 10px;
+}
+
+.error {
+	border: 2px solid red;
+	width: 300px;
+	padding: 10px;
+	color: red;
+}

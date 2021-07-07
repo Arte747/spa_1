@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import {login} from '../../redux/auth-reducer';
 import {Redirect} from 'react-router-dom';
 
-const Login = ({handleSubmit, error, login, isAuth}) => {
+const Login = ({handleSubmit, error, login, isAuth, captchaUrl}) => {
 	
 	let maxLength = maxLengthCreator(30);
 	
@@ -23,6 +23,10 @@ const Login = ({handleSubmit, error, login, isAuth}) => {
 				
 				{createField(Input, "rememberMe", [], "", {type: "checkbox"}, 'remember me')}
 				
+				{captchaUrl ? <img src={captchaUrl} alt="captcha" /> : null}
+				
+				{captchaUrl ? createField(Input, "captcha", [requireField], "Введите символы на изображении", {}) : null}
+				
 				{error ? <div className={s.orerallError}>{error}</div> : null}
 				<div>
 					<button>Login</button>
@@ -35,7 +39,7 @@ const Login = ({handleSubmit, error, login, isAuth}) => {
 	
 	// срабатывает при сабмите формы
 	const onsubmit = (formData) => {
-		login(formData.email, formData.password, formData.rememberMe);
+		login(formData.email, formData.password, formData.rememberMe, formData.captcha);
 	};
 	
 	if(isAuth) return <Redirect to={'profile'} />
@@ -43,13 +47,15 @@ const Login = ({handleSubmit, error, login, isAuth}) => {
 	return (
 		<div className={s.login}>
 			<h3>Login</h3>
-			<LoginReduxForm onSubmit={onsubmit} />
+			<LoginReduxForm onSubmit={onsubmit}
+							captchaUrl={captchaUrl} />
 		</div>
 	);
 };
 
 const mapStateToProps = (state) => ({
-	isAuth: state.auth.isAuth
+	isAuth: state.auth.isAuth,
+	captchaUrl: state.auth.captchaUrl
 });
 
-export default connect(mapStateToProps, {login})(Login);
+export default connect(mapStateToProps, {login, })(Login);

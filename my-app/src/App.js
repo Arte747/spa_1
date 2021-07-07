@@ -7,12 +7,12 @@ import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import Footer from './components/Footer/Footer';
 import Test from './components/Test/Test';
-import {Route, withRouter} from 'react-router-dom';
+import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {initializeApp} from './redux/app-reducer';
 import {compose} from 'redux';
 import Preloader from './common/Preloader/Preloader';
-import {BrowserRouter} from 'react-router-dom';
+// import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import store from './redux/redux-store';
 import {withSuspense} from './hoc/withSuspense';
@@ -21,10 +21,22 @@ const DialogsContainer = React.lazy(() => import('././components/Dialogs/Dialogs
 
 class App extends React.Component {
 	
-	componentDidMount() {
-		this.props.initializeApp();
+	catchAllUnhandledErrors = (reason, promise) => {
+		alert("Some error occured");
 	}
 	
+	componentDidMount() {
+		this.props.initializeApp();
+		window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
+		console.log('didMount');
+	}
+	
+	// после размонтирования компонента, неоходимо отключить слушателя
+	componentWillUnmount() {
+		window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
+		console.log('willUnmount');
+	}
+
 	render() {
 		if(!this.props.initialized) return <Preloader />
 		
@@ -43,6 +55,7 @@ class App extends React.Component {
 					
 					<Route path="/users" render={()=><UsersContainer />} />
 								 
+					<Route path="/test" component={Test} />
 					<Route exact path="/" component={Test} />
 				</div>
 				
