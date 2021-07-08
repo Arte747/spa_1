@@ -17,15 +17,15 @@ const User = (props) => {
 		<div className={s.user} key={props.id}>
 			<NavLink to={'/profile/' + props.id}>
 				
-					<img className={s.ava} src={props.photo ? props.photo : image} alt="ava" />
+					<img className={s.ava} src={props.user.photos.small ? props.user.photos.small : image} alt="ava" />
 				
 			</NavLink>
 				
 			{props.followed
-				? <button disabled={props.followingInProgress.some(id=>id === props.id)} onClick={()=>{onUnFollow(props.id)}}>Unfollow</button>
-				: <button disabled={props.followingInProgress.some(id=>id === props.id)} onClick={()=>{onFollow(props.id)}}>Follow</button>}
-			<div>{props.name}</div>
-			<div>{props.status}</div>
+				? <button disabled={props.followingInProgress.some(id=>id === props.user.id)} onClick={()=>{onUnFollow(props.user.id)}}>Unfollow</button>
+				: <button disabled={props.followingInProgress.some(id=>id === props.user.id)} onClick={()=>{onFollow(props.user.id)}}>Follow</button>}
+			<div>{props.user.name}</div>
+			<div>{props.user.status}</div>
 		</div>
 	);
 };

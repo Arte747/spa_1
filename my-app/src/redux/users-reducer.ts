@@ -1,6 +1,7 @@
 import {usersAPI} from '../api/api';
 import {updateObjectInArray} from '../utils/objects-helpers';
 import {PhotosType} from '../types/types';
+import {UserType} from '../types/types';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -10,23 +11,13 @@ const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 const TOGGLE_IS_FOLLOWING_IN_PROGRESS = 'TOGGLE_IS_FOLLOWING_IN_PROGRESS'
 
-
-
-type UserType = [
-	id: number,
-	name: string,
-	status: string,
-	photos: PhotosType,
-	followed: boolean
-];
-
 const initialState = {
 	users: [] as Array<UserType>,
 	pageSize:  10,
 	totalUsersCount: 0,
 	currentPage: 1,
 	isFetching: true,
-	followingInProgress: [] as Array<Number>,
+	followingInProgress: [] as Array<number>,
 	portionSize: 10 
 };
 

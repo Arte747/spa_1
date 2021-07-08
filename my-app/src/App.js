@@ -53,7 +53,7 @@ class App extends React.Component {
 					
 					<Route path="/dialogs" render={withSuspense(DialogsContainer)} />
 					
-					<Route path="/users" render={()=><UsersContainer />} />
+					<Route path="/users" render={()=><UsersContainer pageTitle={'Самурай'} />} />
 								 
 					<Route path="/test" component={Test} />
 					<Route exact path="/" component={Test} />

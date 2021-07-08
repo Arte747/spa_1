@@ -1,9 +1,17 @@
 import React, {useState} from 'react';
 import s from './Paginator.module.css';
 
-const Paginator = (props) => {
+type PropsType = {
+	totalUsersCount: number
+	pageSize: number
+	currentPage: number
+	onPageChange: (pageNumber: number) => void
+	portionSize: number
+}
+
+const Paginator: React.FC<PropsType> = ({totalUsersCount, pageSize, currentPage, onPageChange, portionSize}) => {
 	
-	let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+	let pagesCount = Math.ceil(totalUsersCount / pageSize);
 	
 	let pages = [];
 	
@@ -14,12 +22,12 @@ const Paginator = (props) => {
 	// portionSize размер порции, приходит из props
 	
 	// portionCount определяем количество порций
-	let portionCount = Math.ceil(pagesCount / props.portionSize);
+	let portionCount = Math.ceil(pagesCount / portionSize);
 	let [currentPortion, setcurrentPortion] = useState(1);
 	// определяем левую границу: (текущая стр. - 1) * pageSize + 1
-	let leftPortionPageNumber = (currentPortion - 1) * props.portionSize + 1;
+	let leftPortionPageNumber = (currentPortion - 1) * portionSize + 1;
 	// определяем правую порцию
-	let rightPortionPageNumber = currentPortion * props.portionSize;
+	let rightPortionPageNumber = currentPortion * portionSize;
 	
 	return (
 		<div className={s.paginator}>
@@ -35,7 +43,7 @@ const Paginator = (props) => {
 			{/* орисовываем только те страницы, которые больше или равны левой границе */}
 			{/* и меньше либо равно правой границе */}
 			{pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber).map(p => {
-				return <button className={props.currentPage === p ? s.active : null} key={p} onClick={(e) => {props.onPageChange(p)}}>{p}</button>
+				return <button className={currentPage === p ? s.active : undefined} key={p} onClick={(e) => {onPageChange(p)}}>{p}</button>
 			})}
 			
 			{portionCount > currentPortion
