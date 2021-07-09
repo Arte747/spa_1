@@ -1,4 +1,5 @@
-import * as axios from 'axios';
+import axios from 'axios';
+import {ProfileType} from '../types/types';
 
 
 const instance = axios.create({
@@ -9,54 +10,82 @@ const instance = axios.create({
 	}
 });
 
+export enum ResultCodesEnum {
+	Success = 0,
+	Error = 1,
+	CaptchaIsRequired = 10
+}
+
+export enum ResultCodeWithCaptcha {
+	CaptchaIsRequired = 10
+}
+
+type MeResponseType = {
+	data: {
+		id: number
+		email: string
+		login: string
+	}
+	resultCode: ResultCodesEnum
+	messages: Array<string>
+}
+
+type LoginResponseType = {
+	data: {
+		userId: number
+	}
+	resultCode: ResultCodesEnum | ResultCodeWithCaptcha
+	messages: Array<string>
+}
+
 export const usersAPI = {
-	getUsers(currentPage, pageSize) {
+	getUsers(currentPage: number, pageSize: number) {
 		return instance.get(`users?page=${currentPage}&count=${pageSize}`)
 			.then(response => response.data);
 	},
 	
-	follow(userId) {
+	follow(userId: number) {
 		return instance.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
 	},
 	
-	unFollow(userId) {
+	unFollow(userId: number) {
 		return instance.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
 	},
 	
 	me() {
-		return instance.get(`auth/me`)
+		return instance.get<MeResponseType>(`auth/me`).then(res => res.data);
 	},
 	
-	getUserProfile(userId) {
+	getUserProfile(userId: number) {
 		return instance.get(`profile/${userId}`)
 	},
 	
-	getStatus(userId) {
+	getStatus(userId: number) {
 		return instance.get(`profile/status/${userId}`);
 	},
 	
-	updateStatus(status) {
+	updateStatus(status: string) {
 		return instance.put(`profile/status`, {status});
 	},
 	
-	login(email, password, rememberMe = false, captcha) {
-		return instance.post(`auth/login`, {email, password, rememberMe, captcha});
+	login(email: string, password: string, rememberMe = false, captcha: null | string = null) {
+		return instance.post<LoginResponseType>(`auth/login`, {email, password, rememberMe, captcha}).then(res => res.data);
 	},
 	
 	logout() {
 		return instance.delete(`auth/login`);
 	},
 	
-	savePhoto(photo) {
+	savePhoto(photo: any) {
 		const formData = new FormData();
 		formData.append("image", photo)
 		// третим параметром указываем, что тип данных не json, а formData
 		return instance.put(`profile/photo`, formData, {
-			'Content-Type': 'multipart/form-data'
+			headers: {'Content-Type': 'multipart/form-data'}
 		});
 	},
 	
-	saveProfile(profile) {
+	saveProfile(profile: ProfileType) {
 		return instance.put(`/profile`, profile);
 	},
 	
