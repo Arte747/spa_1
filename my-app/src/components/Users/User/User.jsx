@@ -14,14 +14,14 @@ const User = (props) => {
 	}
 	
 	return (
-		<div className={s.user} key={props.id}>
-			<NavLink to={'/profile/' + props.id}>
+		<div className={s.user} key={props.user.id}>
+			<NavLink to={'/profile/' + props.user.id}>
 				
 					<img className={s.ava} src={props.user.photos.small ? props.user.photos.small : image} alt="ava" />
 				
 			</NavLink>
 				
-			{props.followed
+			{props.user.followed
 				? <button disabled={props.followingInProgress.some(id=>id === props.user.id)} onClick={()=>{onUnFollow(props.user.id)}}>Unfollow</button>
 				: <button disabled={props.followingInProgress.some(id=>id === props.user.id)} onClick={()=>{onFollow(props.user.id)}}>Follow</button>}
 			<div>{props.user.name}</div>
