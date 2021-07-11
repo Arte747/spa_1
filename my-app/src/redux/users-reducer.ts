@@ -2,9 +2,8 @@ import {usersAPI} from '../api/api';
 import {updateObjectInArray} from '../utils/objects-helpers';
 import {PhotosType} from '../types/types';
 import {UserType} from '../types/types'
-import {AppStateType, InferActionsType} from './redux-store'
+import {AppStateType, InferActionsType, BaseThunkType} from './redux-store'
 import {Dispatch} from 'redux'
-import {ThunkAction} from 'redux-thunk'
 
 
 const initialState = {
@@ -17,7 +16,7 @@ const initialState = {
 	portionSize: 10 
 };
 
-export type initialStateType = typeof initialState;
+
 
 const usersReducers = (state = initialState, action: ActionsTypes): initialStateType => {
 	switch(action.type) {
@@ -72,7 +71,7 @@ const usersReducers = (state = initialState, action: ActionsTypes): initialState
 
 export default usersReducers;
 
-type ActionsTypes = InferActionsType<typeof actions>;
+
 
 export const actions = {
 	followSuccess: (userId: number) => ({type: 'FOLLOW', userId}as const),
@@ -86,9 +85,7 @@ export const actions = {
 
 // thunk
 
-type DispatchType = Dispatch<ActionsTypes>
 
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number) => async (dispatch: Dispatch<ActionsTypes>, getState: AppStateType) => {
 	dispatch(actions.toggleIsFetching(true));
@@ -104,13 +101,13 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => a
 
 
 // дублирующаяся логика для follow unFollow
-const followOverall = async (dispatch: DispatchType,
+const followOverall = async (dispatch: Dispatch<ActionsTypes>,
 							 userId: number,
 							 apiMethod: any,
 							 actionCreator: (userId: number) => ActionsTypes ) => {
 	dispatch(actions.toggleFollowingProgress(true, userId));
-	let response = await apiMethod(userId);
-	if(response.data.resultCode === 0) {
+	let data = await apiMethod(userId);
+	if(data.resultCode === 0) {
 		dispatch(actionCreator(userId));
 	}
 	dispatch(actions.toggleFollowingProgress(false, userId));
@@ -124,3 +121,6 @@ export const unFollow = (userId: number): ThunkType => async (dispatch) => {
 	followOverall(dispatch, userId, usersAPI.unFollow.bind(userId), actions.unfollowSuccess);
 };
 
+export type initialStateType = typeof initialState;
+type ActionsTypes = InferActionsType<typeof actions>;
+type ThunkType = BaseThunkType<ActionsTypes>

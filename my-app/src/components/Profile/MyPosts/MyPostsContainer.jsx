@@ -1,5 +1,5 @@
 import MyPosts from './MyPosts';
-import {addPostAC} from '../../../redux/profile-reducer';
+import {actions} from '../../../redux/profile-reducer';
 import {connect} from 'react-redux';
 
 // при каждом изменении запускается mapStateToProps
@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	addPost(newPost) {
-		dispatch(addPostAC(newPost));
+		dispatch(actions.addPostAC(newPost));
 	}
 });
 
