@@ -128,19 +128,25 @@ export const getUserStatus = (userId: number) => async (dispatch: any) => {
 export const updateStatus = (status: string) => async (dispatch: any) => {
 	// try {
 		// let response = await usersAPI.updateStatus(status);
-		
 		// if(response.data.resultCode === 0) {
 			// dispatch(setUserStatus(status));
+			
 		// }
 	// } catch (error) {
+		// let a = response.data.messages[0];
+		// alert(a)
 		// debugger
+		
 	// }
 	
 	let response = await usersAPI.updateStatus(status);
 		
-		if(response.data.resultCode === 0) {
-			dispatch(setUserStatus(status));
-		}
+	if(response.data.resultCode === 0) {
+		dispatch(setUserStatus(status));
+	} else {
+		let a = response.data.messages[0];
+		alert(a)
+	}
 };
 
 // в ответе сервера придет объект Photos, в котором будут url на фото
@@ -158,6 +164,7 @@ export const saveProfile = (profile: ProfileType) => async (dispatch: any, getSt
 	if(response.data.resultCode === 0) {
 		dispatch(getUserProfile(userId));
 	} else {
+		// эта ошибка попадет в InfoEditMode
 		dispatch(stopSubmit("edit-profile", {_error: response.data.messages[0]}));
 		return Promise.reject();
 	}

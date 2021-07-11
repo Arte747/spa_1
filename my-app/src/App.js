@@ -21,21 +21,34 @@ const DialogsContainer = React.lazy(() => import('././components/Dialogs/Dialogs
 
 class App extends React.Component {
 	
-	catchAllUnhandledErrors = (reason, promise) => {
-		alert("Some error occured");
-	}
+	// catchAllUnhandledErrors = (e) => {
+		// alert("Some error occured");
+	// }
 	
-	componentDidMount() {
-		this.props.initializeApp();
-		window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
-		console.log('didMount');
-	}
+	// componentDidMount() {
+		// this.props.initializeApp();
+		// window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
+		// console.log('didMount');
+	// }
 	
-	// после размонтирования компонента, неоходимо отключить слушателя
-	componentWillUnmount() {
-		window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
-		console.log('willUnmount');
-	}
+	// // после размонтирования компонента, неоходимо отключить слушателя
+	// componentWillUnmount() {
+		// window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
+		// console.log('willUnmount');
+	// }
+	
+	catchAllUnhandledErrors = (e) => {
+        alert('Some error occured')
+    }
+
+    componentDidMount() {
+        this.props.initializeApp()
+        window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
+    }
 
 	render() {
 		if(!this.props.initialized) return <Preloader />
