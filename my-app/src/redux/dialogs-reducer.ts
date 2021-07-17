@@ -1,4 +1,4 @@
-import {InferActionsType} from './redux-store';
+import {InferActionsTypes} from './redux-store';
 
 
 
@@ -42,8 +42,7 @@ const dialogsReducer = (state = initialState, action: ActionsType): InitialState
 			}
 			return {
 				...state,
-				messages: [...state.messages, newMessage],
-				newMessageText: ''
+				messages: [...state.messages, newMessage]
 			}
 		
 		default:
@@ -61,4 +60,4 @@ export const actions = {
 // выводим тип initialState
 export type InitialStateType = typeof initialState;
 // выводим тип actions
-type ActionsType = InferActionsType<typeof actions>
+type ActionsType = InferActionsTypes<typeof actions>

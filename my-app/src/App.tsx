@@ -14,30 +14,22 @@ import {compose} from 'redux';
 import Preloader from './common/Preloader/Preloader';
 // import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import store from './redux/redux-store';
+import store, {AppStateType} from './redux/redux-store';
 import {withSuspense} from './hoc/withSuspense';
 // lazy
 const DialogsContainer = React.lazy(() => import('././components/Dialogs/DialogsContainer'));
 
-class App extends React.Component {
+
+type MapPropsType = ReturnType<typeof mapStateToProps>
+type DispatchPropsType = {
+	initializeApp: () => void
+}
+
+const SuspendedDialogs = withSuspense(DialogsContainer);
+
+class App extends React.Component<MapPropsType & DispatchPropsType> {
 	
-	// catchAllUnhandledErrors = (e) => {
-		// alert("Some error occured");
-	// }
-	
-	// componentDidMount() {
-		// this.props.initializeApp();
-		// window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
-		// console.log('didMount');
-	// }
-	
-	// // после размонтирования компонента, неоходимо отключить слушателя
-	// componentWillUnmount() {
-		// window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
-		// console.log('willUnmount');
-	// }
-	
-	catchAllUnhandledErrors = (e) => {
+	catchAllUnhandledErrors = (e: PromiseRejectionEvent) => {
         alert('Some error occured')
     }
 
@@ -64,9 +56,9 @@ class App extends React.Component {
 					{/* ? означает, что параметр не обязателен */}
 					<Route path="/profile/:userId?" render={()=><ProfileContainer />} />
 					
-					<Route path="/dialogs" render={withSuspense(DialogsContainer)} />
+					<Route path="/dialogs" render={()=><SuspendedDialogs />} />
 					
-					<Route path="/users" render={()=><UsersContainer pageTitle={'Самурай'} />} />
+					<Route path="/users" render={()=><UsersContainer />} />
 								 
 					<Route path="/test" component={Test} />
 					<Route exact path="/" component={Test} />
@@ -78,15 +70,15 @@ class App extends React.Component {
 	}
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
 	initialized: state.app.initialized
 });
 
-let AppContainer =  compose(
+let AppContainer =  compose<React.ComponentType>(
 	withRouter,
 	connect(mapStateToProps, {initializeApp}))(App);
 
-const JsApp = (props) => {
+const JsApp: React.FC = (props) => {
 	return (
 		<BrowserRouter>
 			<Provider store={store}>

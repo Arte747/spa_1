@@ -2,7 +2,7 @@ import {usersAPI} from '../api/api';
 import {updateObjectInArray} from '../utils/objects-helpers';
 import {PhotosType} from '../types/types';
 import {UserType} from '../types/types'
-import {AppStateType, InferActionsType, BaseThunkType} from './redux-store'
+import {AppStateType, InferActionsTypes, BaseThunkType} from './redux-store'
 import {Dispatch} from 'redux'
 
 
@@ -122,5 +122,5 @@ export const unFollow = (userId: number): ThunkType => async (dispatch) => {
 };
 
 export type initialStateType = typeof initialState;
-type ActionsTypes = InferActionsType<typeof actions>;
+type ActionsTypes = InferActionsTypes<typeof actions>;
 type ThunkType = BaseThunkType<ActionsTypes>

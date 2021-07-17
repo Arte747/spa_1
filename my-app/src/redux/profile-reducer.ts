@@ -1,7 +1,7 @@
 import {usersAPI} from '../api/api';
 import {stopSubmit, FormAction} from 'redux-form';
 import {PhotosType, ProfileType, ContactsType} from '../types/types';
-import {InferActionsType, BaseThunkType} from './redux-store';
+import {InferActionsTypes, BaseThunkType} from './redux-store';
 
 type PostType = {
 	id: number,
@@ -17,8 +17,7 @@ const initialState = {
 			{id: 5, message: 'Hi'}
 		] as Array<PostType>,
 		profile: null as ProfileType | null,
-		status: '',
-		newPostText: null as string | null
+		status: ''
 };
 
 
@@ -34,8 +33,7 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
 			}
 			return {
 				...state,
-				posts: [...state.posts, newPost],
-				newPostText: ''
+				posts: [...state.posts, newPost]
 			}
 		
 		case 'SET_USER_PROFILE':
@@ -148,6 +146,6 @@ export const saveProfile = (profile: ProfileType): ThunkType => async (dispatch,
 // определяем тип initialState
 export type InitialStateType = typeof initialState;
 // определяем тип action
-type ActionsType = InferActionsType<typeof actions>
+type ActionsType = InferActionsTypes<typeof actions>
 // выводим тип для thunk
 type ThunkType = BaseThunkType<ActionsType | FormAction>;

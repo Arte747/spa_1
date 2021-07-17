@@ -1,5 +1,5 @@
 import {getAuthUserData} from './auth-reducer';
-import {InferActionsType} from './redux-store';
+import {InferActionsTypes} from './redux-store';
 
 
 const initialState = {
@@ -8,7 +8,7 @@ const initialState = {
 
 export type initialStateType = typeof initialState;
 // автоматически выводим тип для экшенов
-type ActionsType = InferActionsType<typeof actions>
+type ActionsType = InferActionsTypes<typeof actions>
 
 const appReducer = (state = initialState, action: ActionsType): initialStateType => {
 	switch(action.type) {

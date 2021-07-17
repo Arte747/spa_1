@@ -1,7 +1,7 @@
 import {usersAPI} from '../api/api';
 import {stopSubmit, FormAction} from 'redux-form';
 import {ResultCode, ResultCodeWithCaptchaEnum} from '../api/api';
-import {BaseThunkType, InferActionsType} from './redux-store';
+import {BaseThunkType, InferActionsTypes} from './redux-store';
 import {Action} from 'redux';
 
 const initialState = {
@@ -83,6 +83,6 @@ export const getCaptchaUrl = (): ThunkType => async (dispatch) => {
 // выводим тип initialState
 export type initialStateType = typeof initialState;
 // выводим тип action
-type ActionsType = InferActionsType<typeof actions>
+type ActionsType = InferActionsTypes<typeof actions>
 // выводим тип thunk
 type ThunkType = BaseThunkType<ActionsType | FormAction>;

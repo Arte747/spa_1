@@ -48,3 +48,5 @@ export function createField<FormKeysType extends string>(component: React.FC<Wra
 		</div>
 	)	
 }
+
+export type GetStringKeys<T> = Extract<keyof T, string>;

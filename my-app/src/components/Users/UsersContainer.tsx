@@ -82,7 +82,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 		portionSize: state.usersPage.portionSize
 });
 
-export default compose(
+export default compose<React.ComponentType>(
 	connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {follow, unFollow, getUsersThunkCreator}),
 	withAuthRedirect
 )(UsersContainer);
