@@ -1,4 +1,4 @@
-import profileRecer, {addPostAC, deletePost} from './profile-reducer';
+import profileRecer, {addPostAC, deletePost, actions} from './profile-reducer';
 
 const state = {
 		posts: [
@@ -12,7 +12,7 @@ const state = {
 
 test('Length of posts should be incremented', () => {
 	// startData
-	let action = addPostAC("Hello world!");
+	let action = actions.addPostAC("Hello world!");
 	
 	// action
 	let newState = profileRecer(state, action);
@@ -23,7 +23,7 @@ test('Length of posts should be incremented', () => {
 
 test('message should be correct "Hello world!"', () => {
 	// startData
-	let action = addPostAC("Hello world!");
+	let action = actions.addPostAC("Hello world!");
 	
 	
 	
@@ -37,7 +37,7 @@ test('message should be correct "Hello world!"', () => {
 
 test('after deleted length of messages should be decrement', () => {
 	// startData
-	let action = deletePost(1);
+	let action = actions.deletePost(1);
 	
 	
 	

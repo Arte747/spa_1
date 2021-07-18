@@ -12,8 +12,7 @@ const instance = axios.create({
 
 export enum ResultCode {
 	Success = 0,
-	Error = 1,
-	CaptchaIsRequired = 10
+	Error = 1
 }
 
 export enum ResultCodeWithCaptchaEnum {
@@ -39,9 +38,9 @@ type GetItemsType = {
 }
 // D = {} тип пустой объект
 // RC = ResultCode тип
-type APIResponseType<D = {}, RC = ResultCode> = {
+export type APIResponseType<D = {}, RC = ResultCode> = {
 	data: D
-	messages: string
+	messages: Array<string>
 	resultCode: RC
 }
 

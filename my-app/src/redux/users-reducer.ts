@@ -1,4 +1,4 @@
-import {usersAPI} from '../api/api';
+import {usersAPI, APIResponseType} from '../api/api';
 import {updateObjectInArray} from '../utils/objects-helpers';
 import {PhotosType} from '../types/types';
 import {UserType} from '../types/types'
@@ -90,9 +90,7 @@ export const actions = {
 export const getUsersThunkCreator = (currentPage: number, pageSize: number) => async (dispatch: Dispatch<ActionsTypes>, getState: AppStateType) => {
 	dispatch(actions.toggleIsFetching(true));
 	let data = await usersAPI.getUsers(currentPage, pageSize);
-	
 	dispatch(actions.setCurrentPage(currentPage));
-	
 	dispatch(actions.toggleIsFetching(false));
 	dispatch(actions.setTotalUsersCount(data.totalCount));
 	// dispatch(actions.setCurrentPage(pageNumber));
@@ -103,22 +101,23 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => a
 // дублирующаяся логика для follow unFollow
 const followOverall = async (dispatch: Dispatch<ActionsTypes>,
 							 userId: number,
-							 apiMethod: any,
+							 apiMethod: (userId: number) => Promise<APIResponseType>,
 							 actionCreator: (userId: number) => ActionsTypes ) => {
 	dispatch(actions.toggleFollowingProgress(true, userId));
-	let data = await apiMethod(userId);
-	if(data.resultCode === 0) {
+	let res = await apiMethod(userId);
+	if(res.resultCode === 0) {
 		dispatch(actionCreator(userId));
 	}
+	debugger
 	dispatch(actions.toggleFollowingProgress(false, userId));
 }
 
 export const follow = (userId: number): ThunkType => async (dispatch) => {
-	followOverall(dispatch, userId, usersAPI.follow.bind(userId), actions.followSuccess);
+	await followOverall(dispatch, userId, usersAPI.follow.bind(userId), actions.followSuccess);
 };
 
 export const unFollow = (userId: number): ThunkType => async (dispatch) => {
-	followOverall(dispatch, userId, usersAPI.unFollow.bind(userId), actions.unfollowSuccess);
+	await followOverall(dispatch, userId, usersAPI.unFollow.bind(userId), actions.unfollowSuccess);
 };
 
 export type initialStateType = typeof initialState;
